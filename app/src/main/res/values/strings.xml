@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">InterviewExperience</string>
     <string name="action_settings">Settings</string>
-
+    <string name="sign_out">Sign Out</string>
     <!-- OnBoard Screen. -->
 
     <string name="ob_header1">SIMPLE ABROAD CALLS</string>
