@@ -1,6 +1,7 @@
 package com.example.denish.interviewexperience;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -82,9 +83,12 @@ public class OnBoardingActivity extends AppCompatActivity {
         btn_get_started.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(OnBoardingActivity.this,
-                        "Redirect to wherever you want",Toast.LENGTH_LONG).show();
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("onboard", "executed");
+                editor.apply();
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
             }
         });
 
