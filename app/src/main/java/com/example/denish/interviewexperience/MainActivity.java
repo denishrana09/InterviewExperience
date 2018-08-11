@@ -1,14 +1,15 @@
 package com.example.denish.interviewexperience;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 1;
 
     private String mUsername,isExecuted;
+
+    private NetworkChangeReciever mNetworkChangeReciever;
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
                 .getBoolean("isFirstRun", true);
 
         if (isFirstRun) {
-            Log.d(TAG, "onCreate: before Intent of SelectGroup");
+            Log.d(TAG, "onCreate: before Intent of OnBoardingActivity");
             Intent i1 = new Intent(getApplicationContext(),OnBoardingActivity.class);
             startActivity(i1);
-            Log.d(TAG, "onCreate: after Intent of SelectGroup");
+            Log.d(TAG, "onCreate: after Intent of OnBoardingActivity");
         }
 
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
@@ -68,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         isExecuted = pref.getString("onboard", "");
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(new NetworkChangeReciever(), intentFilter);
+
         if(isExecuted.equals("executed")){
             mAuthStateListener = new FirebaseAuth.AuthStateListener() {
                 @Override
@@ -75,15 +85,18 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
                         // User is signed in
+                        Log.d(TAG, "onAuthStateChanged: User is not null");
                         onSignedInInitialized(user.getDisplayName());
 
                     } else {
                         // User is signed out
+                        Log.d(TAG, "onAuthStateChanged: User is null");
                         onSignedOutCleanup();
                         startActivityForResult(
                                 AuthUI.getInstance()
                                         .createSignInIntentBuilder()
                                         .setAvailableProviders(Arrays.asList(
+                                                new AuthUI.IdpConfig.EmailBuilder().build(),
                                                 new AuthUI.IdpConfig.GoogleBuilder().build()))
                                         .build(),
                                 RC_SIGN_IN);
