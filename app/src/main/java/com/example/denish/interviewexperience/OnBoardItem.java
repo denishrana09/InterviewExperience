@@ -1,4 +1,4 @@
-package com.example.denish.interviewexperience.utility;
+package com.example.denish.interviewexperience;
 
 /**
  * Created by Jaison

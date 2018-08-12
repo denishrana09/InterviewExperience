@@ -50,7 +50,7 @@ public class NetworkChangeReciever extends BroadcastReceiver {
                     if (info[i].getState() == NetworkInfo.State.CONNECTED) {
                         if (!isConnected) {
                             Log.d(TAG, "Now you are connected to Internet!");
-//                            Toast.makeText(context, "Internet availablle via Broadcast receiver", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Internet availablle via Broadcast receiver", Toast.LENGTH_SHORT).show();
                             isConnected = true;
                             // do your processing here ---
                             // if you need to post any data to the server or get
@@ -63,7 +63,7 @@ public class NetworkChangeReciever extends BroadcastReceiver {
             }
         }
         Log.d(TAG, "isNetworkAvailable: connected to Internet");
-//        Toast.makeText(context, "Internet NOT availablle via Broadcast receiver", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Internet NOT availablle via Broadcast receiver", Toast.LENGTH_SHORT).show();
         isConnected = false;
         return false;
     }

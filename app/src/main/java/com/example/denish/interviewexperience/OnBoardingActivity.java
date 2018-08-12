@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,20 +14,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import com.example.denish.interviewexperience.utility.OnBoardItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
 public class OnBoardingActivity extends AppCompatActivity {
 
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
-
-    private static final String TAG = "OnBoardingActivity";
-    
     private LinearLayout pager_indicator;
     private int dotsCount;
     private ImageView[] dots;
@@ -78,9 +70,9 @@ public class OnBoardingActivity extends AppCompatActivity {
                 int pos=position+1;
 
                 if(pos==dotsCount&&previous_pos==(dotsCount-1))
-                     show_animation();
+                    show_animation();
                 else if(pos==(dotsCount-1)&&previous_pos==dotsCount)
-                     hide_animation();
+                    hide_animation();
 
                 previous_pos=pos;
             }
@@ -109,9 +101,8 @@ public class OnBoardingActivity extends AppCompatActivity {
 
     // Load data into the viewpager
 
-    public void loadData()
-    {
-        Log.d(TAG, "loadData: called");
+    public void loadData() {
+
         int[] header = {R.string.ob_header1, R.string.ob_header2, R.string.ob_header3};
         int[] desc = {R.string.ob_desc1, R.string.ob_desc2, R.string.ob_desc3};
         int[] imageId = {R.drawable.onboard_page1, R.drawable.onboard_page2, R.drawable.onboard_page3};

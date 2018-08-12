@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(new NetworkChangeReciever(), intentFilter);
+        mNetworkChangeReciever = new NetworkChangeReciever();
+        registerReceiver(mNetworkChangeReciever, intentFilter);
 
         if(isExecuted.equals("executed")){
             mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -138,13 +139,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //FirebaseAuth
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+
+        //NetworkChangeReceiver
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(mNetworkChangeReciever, intentFilter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+
+        //UnRegister NetworkChangeReceiver
+        unregisterReceiver(mNetworkChangeReciever);
     }
 
     @Override
