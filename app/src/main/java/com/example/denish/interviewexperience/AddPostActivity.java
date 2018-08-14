@@ -1,5 +1,6 @@
 package com.example.denish.interviewexperience;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.denish.interviewexperience.model.Post;
 import com.google.firebase.database.DatabaseReference;
@@ -58,10 +60,19 @@ public class AddPostActivity extends AppCompatActivity {
                 todayDate = Calendar.getInstance();
                 todayDate.set(Calendar.HOUR_OF_DAY, 0);
                 //bug : Date not working
+                //feat : check if data already exist for AutoComplete Textview
                 Post model = new Post(title.getText().toString(),company.getText().toString(),
                         position.getText().toString(),
-                        description.getText().toString(),userid,todayDate.toString(),0);
+                        description.getText().toString(),userid,todayDate.getTime().toString(),0);
                 mPostsDBRef.push().setValue(model);
+
+                title.setText("");
+                company.setText("");
+                position.setText("");
+                description.setText("");
+                Toast.makeText(AddPostActivity.this, "Post added succesfully", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
 
