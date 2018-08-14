@@ -17,9 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.denish.interviewexperience.model.User;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "ManActivity";
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private FirebaseDatabase mFirebaseDB;
+    private DatabaseReference mUsersDBRef;
 
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
@@ -51,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 startActivity(new Intent(MainActivity.this,AddPostActivity.class));
             }
         });
@@ -71,14 +74,17 @@ public class MainActivity extends AppCompatActivity {
                 .putBoolean("isFirstRun", false).apply();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDB = FirebaseDatabase.getInstance();
+        mUsersDBRef = mFirebaseDB.getReference().child("users");
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
-        isExecuted = pref.getString("onboard", "");
-
+        //Network Connection
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         mNetworkChangeReciever = new NetworkChangeReciever();
         registerReceiver(mNetworkChangeReciever, intentFilter);
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        isExecuted = pref.getString("onboard", "");
 
         if(isExecuted.equals("executed")){
             mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -88,12 +94,19 @@ public class MainActivity extends AppCompatActivity {
                     if (user != null) {
                         // User is signed in
                         Log.d(TAG, "onAuthStateChanged: User is not null");
-                        onSignedInInitialized(user.getDisplayName());
+                        onSignedInInitialized(user.getDisplayName(),user.getEmail());
+
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("Database", 0); // 0 - for private mode
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("username", user.getDisplayName());
+                        editor.putString("email",user.getEmail());
+                        editor.apply();
 
                     } else {
                         // User is signed out
                         Log.d(TAG, "onAuthStateChanged: User is null");
                         onSignedOutCleanup();
+                        // to-do : own background in AuthUI
                         startActivityForResult(
                                 AuthUI.getInstance()
                                         .createSignInIntentBuilder()
@@ -115,8 +128,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void onSignedInInitialized(String displayName) {
+    private void onSignedInInitialized(String displayName,String email) {
         mUsername = displayName;
+        //bug : if user already exist
+        //bug : pushing data also on signing out
+        User user = new User(mUsername,"avatar_person.png",
+                "Hello!!",email);
+        String userId = mUsersDBRef.push().getKey();
+        mUsersDBRef.child(userId).setValue(user);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("Database", 0); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("userId", userId.toString());
+        editor.apply();
     }
 
     private void onSignedOutCleanup(){
