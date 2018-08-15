@@ -86,33 +86,45 @@ public class AddPostActivity extends AppCompatActivity {
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                todaysDate = new Date();
-                //feat : check if data already exist for AutoComplete Textview
-                Post model = new Post(title.getText().toString(),company.getText().toString(),
-                        position.getText().toString(),
-                        description.getText().toString(),userid,dateFormat.format(todaysDate),0);
-                mPostsDBRef.push().setValue(model);
-
-                String newCompany = company.getText().toString();
-                String newPosition = position.getText().toString();
-                if(!allCompanies.contains(newCompany)){
-                    Log.d(TAG, "onClick: No Result Found");
-                    Company company = new Company(newCompany);
-                    mCompanyDBRef.push().setValue(company);
+                if(title.getText().toString().length()==0){
+                    title.setError("Field can not be left blank.");
                 }
-                if(!allPositions.contains(newCompany)){
-                    Log.d(TAG, "onClick: No Result Found");
-                    Position pos = new Position(newPosition);
-                    mPositionDBRef.push().setValue(pos);
+                else if(company.getText().toString().length()==0){
+                    company.setError("Field can not be left blank.");
                 }
-                title.setText("");
-                company.setText("");
-                position.setText("");
-                description.setText("");
-                Toast.makeText(AddPostActivity.this, "Post added succesfully", Toast.LENGTH_SHORT).show();
+                else if(position.getText().toString().length()==0){
+                    position.setError("Field can not be left blank.");
+                }
+                else if(description.getText().toString().length()==0){
+                    description.setError("Field can not be left blank.");
+                }else {
+                    todaysDate = new Date();
+                    Post model = new Post(title.getText().toString(), company.getText().toString(),
+                            position.getText().toString(),
+                            description.getText().toString(), userid, dateFormat.format(todaysDate), 0);
+                    mPostsDBRef.push().setValue(model);
 
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                finish();
+                    String newCompany = company.getText().toString();
+                    String newPosition = position.getText().toString();
+                    if (!allCompanies.contains(newCompany)) {
+                        Log.d(TAG, "onClick: No Result Found");
+                        Company company = new Company(newCompany);
+                        mCompanyDBRef.push().setValue(company);
+                    }
+                    if (!allPositions.contains(newCompany)) {
+                        Log.d(TAG, "onClick: No Result Found");
+                        Position pos = new Position(newPosition);
+                        mPositionDBRef.push().setValue(pos);
+                    }
+                    title.setText("");
+                    company.setText("");
+                    position.setText("");
+                    description.setText("");
+                    Toast.makeText(AddPostActivity.this, "Post added succesfully", Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }
             }
         });
 
