@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference mUsersDBRef;
     private ChildEventListener mUserCEListener;
-    ArrayList<String> emailList;
+    ArrayList<String> emailList,userIdList;
 
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(mNetworkChangeReciever, intentFilter);
 
         emailList = new ArrayList<>();
+        userIdList = new ArrayList<>();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         isExecuted = pref.getString("onboard", "");
@@ -103,13 +104,12 @@ public class MainActivity extends AppCompatActivity {
                     if (user != null) {
                         // User is signed in
                         Log.d(TAG, "onAuthStateChanged: User is not null");
-                        onSignedInInitialized(user.getDisplayName(),user.getEmail());
-
                         SharedPreferences pref = getApplicationContext().getSharedPreferences("Database", 0); // 0 - for private mode
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("username", user.getDisplayName());
                         editor.putString("email",user.getEmail());
                         editor.apply();
+                        onSignedInInitialized(user.getDisplayName(),user.getEmail());
 
                     } else {
                         // User is signed out
@@ -138,16 +138,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onSignedInInitialized(String displayName, final String email) {
-
         mUsername = displayName;
-//        Log.d(TAG, "onSignedInInitialized: before mUserCEListener");
         if(mUserCEListener == null){
-//            Log.d(TAG, "onSignedInInitialized: inside CE Listener");
             mUserCEListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     User user = dataSnapshot.getValue(User.class);
-//                    Log.d(TAG, "onChildAdded: emails : " + user.getEmail());
+                    userIdList.add(dataSnapshot.getKey());
                     emailList.add(user.getEmail());
                 }
 
@@ -182,6 +179,14 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences pref = getApplicationContext().getSharedPreferences("Database", 0); // 0 - for private mode
             SharedPreferences.Editor editor = pref.edit();
             editor.putString("userId", userId.toString());
+            editor.apply();
+        }
+        if(emailList.size()!=0 && email!=null && emailList.contains(email)){
+            int userLocation = emailList.indexOf(email);
+            String oldUserId = userIdList.get(userLocation);
+            SharedPreferences pref = getApplicationContext().getSharedPreferences("Database", 0); // 0 - for private mode
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("userId", oldUserId);
             editor.apply();
         }
     }

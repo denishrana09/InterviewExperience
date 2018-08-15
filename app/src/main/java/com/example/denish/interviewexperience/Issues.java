@@ -7,7 +7,6 @@ package com.example.denish.interviewexperience;
 public class Issues {
 
     /*
-      bug : Switch Gmail Accounts -> userId sharedPreference
       bug : Network Change Reciever
       fix : popUp Theme in AutoCompleteTextView
     * */
