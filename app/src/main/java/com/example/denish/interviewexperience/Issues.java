@@ -7,8 +7,10 @@ package com.example.denish.interviewexperience;
 public class Issues {
 
     /*
-      bug : Date not working
+      bug : Switch Gmail Accounts -> userId sharedPreference
       bug : Network Change Reciever
+      fix : popUp Theme in AutoCompleteTextView
+      bug : Handle Blank inputs in Post Activity
     * */
 
 }
