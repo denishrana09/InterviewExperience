@@ -11,17 +11,19 @@ public class Post {
     String userid;
     String date;
     int likes;
+    int comments;
 
     public Post() {
     }
 
-    public Post(String company, String position, String description, String userid, String date, int likes) {
+    public Post(String company, String position, String description, String userid, String date, int likes, int comments) {
         this.company = company;
         this.position = position;
         this.description = description;
         this.userid = userid;
         this.date = date;
         this.likes = likes;
+        this.comments = comments;
     }
 
     public String getUserid() {
@@ -70,5 +72,13 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 }

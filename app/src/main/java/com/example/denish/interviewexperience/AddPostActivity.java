@@ -36,7 +36,7 @@ public class AddPostActivity extends AppCompatActivity {
     ChildEventListener companyCEListener,positionCEListener;
 
     Button addPostButton;
-    AutoCompleteTextView title,company,position;
+    AutoCompleteTextView company,position;
     EditText description;
     String username,email,userid;
     DateFormat dateFormat;
@@ -62,7 +62,6 @@ public class AddPostActivity extends AppCompatActivity {
         email = pref.getString("email","");
         userid = pref.getString("userId","");
 
-        title = findViewById(R.id.autotv_title);
         company = findViewById(R.id.autotv_company);
         allCompanies = getCompanies();
         Log.d(TAG, "onCreate: " + allCompanies);
@@ -86,10 +85,7 @@ public class AddPostActivity extends AppCompatActivity {
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(title.getText().toString().length()==0){
-                    title.setError("Field can not be left blank.");
-                }
-                else if(company.getText().toString().length()==0){
+                if(company.getText().toString().length()==0){
                     company.setError("Field can not be left blank.");
                 }
                 else if(position.getText().toString().length()==0){
@@ -99,9 +95,9 @@ public class AddPostActivity extends AppCompatActivity {
                     description.setError("Field can not be left blank.");
                 }else {
                     todaysDate = new Date();
-                    Post model = new Post(title.getText().toString(), company.getText().toString(),
+                    Post model = new Post(company.getText().toString(),
                             position.getText().toString(),
-                            description.getText().toString(), userid, dateFormat.format(todaysDate), 0);
+                            description.getText().toString(), userid, dateFormat.format(todaysDate), 0, 0);
                     mPostsDBRef.push().setValue(model);
 
                     String newCompany = company.getText().toString();
@@ -116,7 +112,6 @@ public class AddPostActivity extends AppCompatActivity {
                         Position pos = new Position(newPosition);
                         mPositionDBRef.push().setValue(pos);
                     }
-                    title.setText("");
                     company.setText("");
                     position.setText("");
                     description.setText("");
