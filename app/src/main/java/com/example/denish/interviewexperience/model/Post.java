@@ -5,7 +5,6 @@ package com.example.denish.interviewexperience.model;
  */
 
 public class Post {
-    String title;
     String company;
     String position;
     String description;
@@ -16,8 +15,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String title, String company, String position, String description, String userid, String date, int likes) {
-        this.title = title;
+    public Post(String company, String position, String description, String userid, String date, int likes) {
         this.company = company;
         this.position = position;
         this.description = description;
@@ -48,14 +46,6 @@ public class Post {
 
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getCompany() {
