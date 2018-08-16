@@ -10,6 +10,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -189,6 +191,11 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("userId", oldUserId);
             editor.apply();
         }
+
+//        RecyclerView recyclerView = findViewById(R.id.post_recycler_view);
+//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mNames, mImageUrls);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void onSignedOutCleanup(){
