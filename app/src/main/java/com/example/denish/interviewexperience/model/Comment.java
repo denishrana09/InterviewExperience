@@ -6,15 +6,15 @@ package com.example.denish.interviewexperience.model;
 
 public class Comment {
     String message;
-    String username;
+    String userid;
     String postid;
 
     public Comment() {
     }
 
-    public Comment(String message, String username, String postid) {
+    public Comment(String message, String userid, String postid) {
         this.message = message;
-        this.username = username;
+        this.userid = userid;
         this.postid = postid;
     }
 
@@ -34,11 +34,11 @@ public class Comment {
         this.postid = postid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }
