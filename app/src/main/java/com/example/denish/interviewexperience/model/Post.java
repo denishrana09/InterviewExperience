@@ -81,4 +81,17 @@ public class Post {
     public void setComments(int comments) {
         this.comments = comments;
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "company='" + company + '\'' +
+                ", position='" + position + '\'' +
+                ", description='" + description + '\'' +
+                ", userid='" + userid + '\'' +
+                ", date='" + date + '\'' +
+                ", likes=" + likes +
+                ", comments=" + comments +
+                '}';
+    }
 }

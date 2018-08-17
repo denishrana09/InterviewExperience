@@ -17,8 +17,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.denish.interviewexperience.model.Company;
+import com.example.denish.interviewexperience.model.Post;
 import com.example.denish.interviewexperience.model.User;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,8 +44,13 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference mUsersDBRef;
+    private DatabaseReference mPostsDBRef;
     private ChildEventListener mUserCEListener;
+    private ChildEventListener mPostCEListener;
     ArrayList<String> emailList,userIdList;
+
+    List<Post> mPostsDataItems;
+    ArrayList<String> mKeys;
 
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
@@ -49,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     private String mUsername,isExecuted;
 
     private NetworkChangeReciever mNetworkChangeReciever;
+
+    private RecyclerViewAdapter mRecyclerViewAdapter;
+    public ProgressBar mProgressBar;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -85,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
         mUsersDBRef = mFirebaseDB.getReference().child("users");
+        mPostsDBRef = mFirebaseDB.getReference().child("posts");
 
         //Network Connection
         IntentFilter intentFilter = new IntentFilter();
@@ -94,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
 
         emailList = new ArrayList<>();
         userIdList = new ArrayList<>();
+
+        mKeys = new ArrayList<String>();
+        mPostsDataItems = new ArrayList<>();
+        mProgressBar = findViewById(R.id.content_progress_bar);
+        mProgressBar.setVisibility(View.VISIBLE);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         isExecuted = pref.getString("onboard", "");
@@ -192,14 +210,78 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
         }
 
-//        RecyclerView recyclerView = findViewById(R.id.post_recycler_view);
-//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mNames, mImageUrls);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        getPosts();
+
+//        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,recyclerView,this));
     }
 
     private void onSignedOutCleanup(){
         mUsername = ANONYMOUS;
+    }
+
+    public void getPosts(){
+        if(mPostCEListener == null){
+            mPostCEListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Post p = dataSnapshot.getValue(Post.class);
+                    mPostsDataItems.add(p);
+                    String key = dataSnapshot.getKey();
+                    mKeys.add(key);
+                    mRecyclerViewAdapter.notifyDataSetChanged();
+                    if(mPostsDataItems.size()!=0)
+                        mProgressBar.setVisibility(View.GONE);
+//                    Log.d(TAG, "onChildAdded: getPosts: post added : " + p.toString());
+//                    Log.d(TAG, "onChildAdded: getPosts: post size : " + mPostsDataItems.size());
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    if(dataSnapshot.getValue()!=null){
+                        String key = dataSnapshot.getKey();
+                        int index = mKeys.indexOf(key);
+                        Post p = dataSnapshot.getValue(Post.class);
+                        mPostsDataItems.set(index,p);
+                        mRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getValue()!=null){
+                        String key = dataSnapshot.getKey();
+                        int index = mKeys.indexOf(key);
+                        mPostsDataItems.remove(index);
+                        mRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            };
+            mPostsDBRef.addChildEventListener(mPostCEListener);
+        }
+        initRecyclerView();
+    }
+
+    public void initRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.post_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if(mPostsDataItems.size()!=0)
+            mProgressBar.setVisibility(View.GONE);
+        mRecyclerViewAdapter = new RecyclerViewAdapter(this,mPostsDataItems,mUsername);
+        recyclerView.setAdapter(mRecyclerViewAdapter);
+
+        mRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -222,6 +304,10 @@ public class MainActivity extends AppCompatActivity {
         //FirebaseAuth
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
 
+        if(mPostsDataItems.size()!=0)
+            mProgressBar.setVisibility(View.GONE);
+        else
+            mProgressBar.setVisibility(View.VISIBLE);
         //NetworkChangeReceiver
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);

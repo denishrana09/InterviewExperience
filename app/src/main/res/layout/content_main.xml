@@ -11,5 +11,16 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/post_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+    </android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/content_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:progressDrawable="@drawable/circular_progress_view"
+        android:layout_height="75dp"
+        android:layout_width="75dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

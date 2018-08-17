@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -16,7 +15,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="2dp"
             app:cardCornerRadius="8dp">
 
             <android.support.constraint.ConstraintLayout
@@ -24,120 +23,138 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/tv_company_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Company" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/tv_position_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/textView5"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_company_listitem"
                     tools:text="Position" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/tv_username_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="username" />
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/tv_description_listitem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@android:color/transparent"
-                    android:editable="false"
                     android:ems="10"
                     android:inputType="textMultiLine"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_position_listitem" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/tv_total_likes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editText2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_description_listitem"
                     tools:text="12 likes" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/tv_total_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/textView8"
-                    app:layout_constraintTop_toTopOf="@+id/textView8"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/tv_total_likes"
+                    app:layout_constraintTop_toTopOf="@+id/tv_total_likes"
                     tools:text="3 comments" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/btn_like_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@null"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
                     app:srcCompat="@mipmap/baseline_thumb_up_black_24" />
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/tv_like_listeitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="12dp"
-                    app:layout_constraintStart_toEndOf="@+id/imageButton"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9"
+                    app:layout_constraintStart_toEndOf="@+id/btn_like_listitem"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
                     tools:text="like" />
 
                 <ImageButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/btn_comment_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
-                    app:layout_constraintStart_toEndOf="@+id/textView10"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9"
+                    app:layout_constraintStart_toEndOf="@+id/tv_like_listeitem"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
                     app:srcCompat="@mipmap/baseline_comment_black_24" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/tv_comment_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toEndOf="@+id/imageButton2"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9"
+                    app:layout_constraintStart_toEndOf="@+id/btn_comment_listitem"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
                     tools:text="comment" />
 
                 <ImageButton
-                    android:id="@+id/imageButton3"
+                    android:id="@+id/btn_save_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:background="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:srcCompat="@mipmap/baseline_bookmark_border_black_36" />
+
+                <TextView
+                    android:id="@+id/tv_date_listitem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_username_listitem"
+                    tools:text="date" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
 
