@@ -40,9 +40,8 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     static class ViewHolder extends RecyclerView.ViewHolder{
         private static final String TAG = "ViewHolder";
         TextView company=null,position=null,username=null,postdate=null
-                ,totallikes=null,totalcomments=null,like=null,comment=null;
+                ,totallikes=null,totalcomments=null,like=null,comment=null,description=null;
         ImageButton btn_like=null,btn_comment=null,btn_save=null;
-        EditText description=null;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -54,7 +53,6 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
             this.like = itemView.findViewById(R.id.tv_like_listeitem);
             this.comment = itemView.findViewById(R.id.tv_comment_listitem);
             this.postdate = itemView.findViewById(R.id.tv_date_listitem);
-
             this.description = itemView.findViewById(R.id.tv_description_listitem);
 
             this.btn_like = itemView.findViewById(R.id.btn_like_listitem);
@@ -85,9 +83,11 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         holder.comment.setText(" comment");
         holder.postdate.setText(postItem.getDate());
 
-        holder.description.setText(postItem.getDescription());
+        String str = postItem.getDescription();
+        String result = str.replaceAll("(?m)(^\\s+|[\\t\\f ](?=[\\t\\f ])|[\\t\\f ]$|\\s+\\z)", "");
+        holder.description.setText(result);
 //        holder.description.setEnabled(false);
-        holder.description.setInputType(InputType.TYPE_NULL);
+//        holder.description.setInputType(InputType.TYPE_NULL);
         holder.btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

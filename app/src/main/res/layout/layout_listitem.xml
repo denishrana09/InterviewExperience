@@ -38,6 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_company_listitem"
@@ -54,16 +55,20 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="username" />
 
-                <EditText
+                <TextView
                     android:id="@+id/tv_description_listitem"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:ellipsize="end"
+                    android:lines="4"
+                    android:maxLines="4"
+                    android:singleLine="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_position_listitem" />
@@ -74,9 +79,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_description_listitem"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
                     tools:text="12 likes" />
 
                 <TextView
@@ -105,8 +109,6 @@
                     android:id="@+id/tv_like_listeitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="12dp"
                     app:layout_constraintStart_toEndOf="@+id/btn_like_listitem"
                     app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
@@ -116,7 +118,7 @@
                     android:id="@+id/btn_comment_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
@@ -128,8 +130,6 @@
                     android:id="@+id/tv_comment_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintStart_toEndOf="@+id/btn_comment_listitem"
                     app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
@@ -151,10 +151,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_username_listitem"
                     tools:text="date" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="read full post"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_description_listitem" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
 
