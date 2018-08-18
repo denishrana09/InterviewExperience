@@ -1,6 +1,13 @@
 package com.example.denish.interviewexperience;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
@@ -15,7 +22,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.denish.interviewexperience.model.LikedPost;
 import com.example.denish.interviewexperience.model.Post;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +42,14 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     private static final String TAG = "RecyclerViewAdapter";
     private Context mContext;
     private List<Post> mPostList;
-    private String theusername;
+    private String theusername,userid;
+    private boolean isLiked = false;
+    private int oldLikes;
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mPostDBRef;
+    private DatabaseReference mLikedPostDBRef;
+    private ChildEventListener mPostChildEventListener;
 
     public RecyclerViewAdapter(Context mContext, List<Post> mPostList, String username) {
         this.mContext = mContext;
@@ -65,20 +85,24 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: new view requested");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem,parent,false);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mPostDBRef = mFirebaseDatabase.getReference().child("posts");
+        mLikedPostDBRef = mFirebaseDatabase.getReference().child("likedpost");
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder,int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         //called by layout manager when it wants new data in existing row
-        Post postItem = mPostList.get(position);
+        final Post postItem = mPostList.get(position);
         final int pos = position;
+
+        SharedPreferences pref = mContext.getSharedPreferences("Database", 0);
+        userid = pref.getString("userId","");
 
         holder.company.setText(postItem.getCompany());
         holder.position.setText(postItem.getPosition());
         holder.username.setText(theusername);
-        holder.totallikes.setText(postItem.getLikes()+ " likes");
-        holder.totalcomments.setText(postItem.getComments() + " comments");
         holder.like.setText(" like");
         holder.comment.setText(" comment");
         holder.postdate.setText(postItem.getDate());
@@ -91,7 +115,118 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         holder.btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Liked", Toast.LENGTH_SHORT).show();
+                if(!isLiked){
+                    isLiked = true;
+                    mPostDBRef.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            Post post = dataSnapshot.getValue(Post.class);
+                            String postId = dataSnapshot.getKey();
+                            if(postItem.getUserid().equals(post.getUserid()) &&
+                                    postItem.getDescription().equals(post.getDescription())){
+                                mPostDBRef.child(postId).child("likes").setValue(post.getLikes()+1);
+                                notifyDataSetChanged();
+
+                                LikedPost likedPost = new LikedPost(userid,postId);
+                                mLikedPostDBRef.push().setValue(likedPost);
+
+//                                holder.btn_like.setColorFilter(mContext.getResources().getColor(R.color.colorAccent));
+                            }
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }else {
+                    isLiked = false;
+                    mPostDBRef.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            Post post = dataSnapshot.getValue(Post.class);
+                            final String postId = dataSnapshot.getKey();
+                            if(postItem.getUserid().equals(post.getUserid()) &&
+                                    postItem.getDescription().equals(post.getDescription())){
+                                oldLikes = post.getLikes();
+                                oldLikes -= 1;
+                                mPostDBRef.child(postId).child("likes").setValue(post.getLikes()-1);
+                                notifyDataSetChanged();
+
+
+                                mLikedPostDBRef.addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                        LikedPost likedPost = dataSnapshot.getValue(LikedPost.class);
+                                        String likedPostId = dataSnapshot.getKey();
+                                        if(likedPost.getUserid().equals(userid) && likedPost.getPostid().equals(postId)){
+                                            mLikedPostDBRef.child(likedPostId).removeValue();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+//                                holder.btn_like.setColorFilter(mContext.getResources().getColor(R.color.black));
+                            }
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+
             }
         });
         holder.btn_comment.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +241,9 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
                 Toast.makeText(mContext, "Saved", Toast.LENGTH_SHORT).show();
             }
         });
+
+        holder.totallikes.setText(postItem.getLikes()+ " likes");
+        holder.totalcomments.setText(postItem.getComments() + " comments");
     }
 
     @Override
@@ -117,6 +255,8 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     public Post getPost(int position){
         return ((mPostList!=null) && (mPostList.size()!=0) ? mPostList.get(position) : null);
     }
+
+
 
 }
 
