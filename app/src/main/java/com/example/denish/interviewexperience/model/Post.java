@@ -10,19 +10,19 @@ public class Post {
     String description;
     String userid;
     String date;
-    int likes;
+    int views;
     int comments;
 
     public Post() {
     }
 
-    public Post(String company, String position, String description, String userid, String date, int likes, int comments) {
+    public Post(String company, String position, String description, String userid, String date, int views, int comments) {
         this.company = company;
         this.position = position;
         this.description = description;
         this.userid = userid;
         this.date = date;
-        this.likes = likes;
+        this.views = views;
         this.comments = comments;
     }
 
@@ -42,12 +42,12 @@ public class Post {
         this.date = date;
     }
 
-    public int getLikes() {
-        return likes;
+    public int getViews() {
+        return views;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public void setViews(int views) {
+        this.views = views;
     }
 
     public String getCompany() {
@@ -90,7 +90,7 @@ public class Post {
                 ", description='" + description + '\'' +
                 ", userid='" + userid + '\'' +
                 ", date='" + date + '\'' +
-                ", likes=" + likes +
+                ", views=" + views +
                 ", comments=" + comments +
                 '}';
     }

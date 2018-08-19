@@ -74,14 +74,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_position_listitem" />
 
                 <TextView
-                    android:id="@+id/tv_total_likes"
+                    android:id="@+id/tv_views"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    tools:text="12 likes" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_description_listitem"
+                    tools:text="0 views" />
 
                 <TextView
                     android:id="@+id/tv_total_comment"
@@ -89,40 +89,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/tv_total_likes"
-                    app:layout_constraintTop_toTopOf="@+id/tv_total_likes"
+                    app:layout_constraintStart_toEndOf="@+id/tv_views"
+                    app:layout_constraintTop_toTopOf="@+id/tv_views"
                     tools:text="3 comments" />
-
-                <ImageButton
-                    android:id="@+id/btn_like_listitem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@null"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
-                    app:srcCompat="@mipmap/baseline_thumb_up_black_24" />
-
-                <TextView
-                    android:id="@+id/tv_like_listeitem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintStart_toEndOf="@+id/btn_like_listitem"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
-                    tools:text="like" />
 
                 <ImageButton
                     android:id="@+id/btn_comment_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
-                    app:layout_constraintStart_toEndOf="@+id/tv_like_listeitem"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
                     app:srcCompat="@mipmap/baseline_comment_black_24" />
 
@@ -130,21 +108,11 @@
                     android:id="@+id/tv_comment_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintStart_toEndOf="@+id/btn_comment_listitem"
                     app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
                     tools:text="comment" />
-
-                <ImageButton
-                    android:id="@+id/btn_save_listitem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@null"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@mipmap/baseline_bookmark_border_black_36" />
 
                 <TextView
                     android:id="@+id/tv_date_listitem"

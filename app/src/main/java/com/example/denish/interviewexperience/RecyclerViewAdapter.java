@@ -40,24 +40,22 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     static class ViewHolder extends RecyclerView.ViewHolder{
         private static final String TAG = "ViewHolder";
         TextView company=null,position=null,username=null,postdate=null
-                ,totallikes=null,totalcomments=null,like=null,comment=null,description=null;
-        ImageButton btn_like=null,btn_comment=null,btn_save=null;
+                ,totalcomments=null,views=null,comment=null,description=null;
+        ImageButton btn_comment=null;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.company = itemView.findViewById(R.id.tv_company_listitem);
             this.position = itemView.findViewById(R.id.tv_position_listitem);
             this.username = itemView.findViewById(R.id.tv_username_listitem);
-            this.totallikes = itemView.findViewById(R.id.tv_total_likes);
             this.totalcomments = itemView.findViewById(R.id.tv_total_comment);
-            this.like = itemView.findViewById(R.id.tv_like_listeitem);
+            this.views = itemView.findViewById(R.id.tv_views);
             this.comment = itemView.findViewById(R.id.tv_comment_listitem);
             this.postdate = itemView.findViewById(R.id.tv_date_listitem);
             this.description = itemView.findViewById(R.id.tv_description_listitem);
 
-            this.btn_like = itemView.findViewById(R.id.btn_like_listitem);
             this.btn_comment = itemView.findViewById(R.id.btn_comment_listitem);
-            this.btn_save = itemView.findViewById(R.id.btn_save_listitem);
+
         }
     }
 
@@ -77,9 +75,8 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         holder.company.setText(postItem.getCompany());
         holder.position.setText(postItem.getPosition());
         holder.username.setText(theusername);
-        holder.totallikes.setText(postItem.getLikes()+ " likes");
+        holder.views.setText(postItem.getViews()+ " views");
         holder.totalcomments.setText(postItem.getComments() + " comments");
-        holder.like.setText(" like");
         holder.comment.setText(" comment");
         holder.postdate.setText(postItem.getDate());
 
@@ -88,24 +85,6 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         holder.description.setText(result);
 //        holder.description.setEnabled(false);
 //        holder.description.setInputType(InputType.TYPE_NULL);
-        holder.btn_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "Liked", Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.btn_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "Commented", Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.btn_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "Saved", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
