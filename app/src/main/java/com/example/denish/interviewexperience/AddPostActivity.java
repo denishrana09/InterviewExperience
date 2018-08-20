@@ -107,7 +107,7 @@ public class AddPostActivity extends AppCompatActivity {
                         Company company = new Company(newCompany);
                         mCompanyDBRef.push().setValue(company);
                     }
-                    if (!allPositions.contains(newCompany)) {
+                    if (!allPositions.contains(newPosition)) {
                         Log.d(TAG, "onClick: No Result Found");
                         Position pos = new Position(newPosition);
                         mPositionDBRef.push().setValue(pos);
@@ -134,7 +134,7 @@ public class AddPostActivity extends AppCompatActivity {
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Company company = dataSnapshot.getValue(Company.class);
                     companyList.add(company.getCompany());
-                    Log.d(TAG, "onChildAdded: company : " + company.getCompany());
+//                    Log.d(TAG, "onChildAdded: company : " + company.getCompany());
                 }
 
                 @Override
@@ -172,7 +172,7 @@ public class AddPostActivity extends AppCompatActivity {
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Position p = dataSnapshot.getValue(Position.class);
                     positionList.add(p.getPosition());
-                    Log.d(TAG, "onChildAdded: position : " + p.getPosition());
+//                    Log.d(TAG, "onChildAdded: position : " + p.getPosition());
                 }
 
                 @Override
