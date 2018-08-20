@@ -33,13 +33,23 @@
         </activity>
         <activity
             android:name=".OnBoardingActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".AddPostActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddPostActivity"
             android:label="AddPost"
             android:theme="@style/Theme.AppCompat.Light">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.denish.interviewexperience.MainActivity"/>
+                android:value="com.example.denish.interviewexperience.MainActivity" />
+        </activity>
+        <activity
+            android:name=".PostDetailActivity"
+            android:label="@string/title_activity_post_detail"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.denish.interviewexperience.MainActivity" />
         </activity>
     </application>
 

@@ -37,9 +37,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        RecyclerItemClickListener.OnRecyclerClickListener{
 
     private static final String TAG = "ManActivity";
+    private static final String  POST_TRANSFER = "POST_TRANSFER";
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDB;
@@ -212,8 +214,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         getPosts();
-
-//        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,recyclerView,this));
     }
 
     private void onSignedOutCleanup(){
@@ -282,6 +282,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mRecyclerViewAdapter);
 
         mRecyclerViewAdapter.notifyDataSetChanged();
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,recyclerView,this));
     }
 
     @Override
@@ -321,6 +323,22 @@ public class MainActivity extends AppCompatActivity {
 
         //UnRegister NetworkChangeReceiver
         unregisterReceiver(mNetworkChangeReciever);
+    }
+
+    @Override
+    public void OnItemClick(View view, int position) {
+        Log.d(TAG, "OnItemClick: starts");
+        Toast.makeText(MainActivity.this, "Normal tap at position "+ position, Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this,PostDetailActivity.class);
+        intent.putExtra(POST_TRANSFER,mRecyclerViewAdapter.getPost(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void OnItemLongClick(View view, int position) {
+        Log.d(TAG, "OnItemLongClick: starts");
+        Toast.makeText(MainActivity.this, "Long tap at position "+ position, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.example.denish.interviewexperience.model;
 
+import java.io.Serializable;
+
 /**
  * Created by denish on 13/8/18.
  */
 
-public class Post {
+public class Post implements Serializable{
     String company;
     String position;
     String description;
@@ -94,4 +96,6 @@ public class Post {
                 ", comments=" + comments +
                 '}';
     }
+
+
 }

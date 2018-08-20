@@ -83,6 +83,8 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         String str = postItem.getDescription();
         String result = str.replaceAll("(?m)(^\\s+|[\\t\\f ](?=[\\t\\f ])|[\\t\\f ]$|\\s+\\z)", "");
         holder.description.setText(result);
+        holder.description.setKeyListener(null);
+
 //        holder.description.setEnabled(false);
 //        holder.description.setInputType(InputType.TYPE_NULL);
     }
