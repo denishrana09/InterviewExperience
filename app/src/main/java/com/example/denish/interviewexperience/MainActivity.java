@@ -332,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements
 
         Intent intent = new Intent(this,PostDetailActivity.class);
         intent.putExtra(POST_TRANSFER,mRecyclerViewAdapter.getPost(position));
+        intent.putExtra("postKey",mKeys.get(position));
         startActivity(intent);
     }
 

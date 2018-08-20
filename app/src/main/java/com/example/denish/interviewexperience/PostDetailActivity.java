@@ -38,6 +38,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Post post =(Post) intent.getSerializableExtra(POST_TRANSFER);
+        String postKey = (String) intent.getSerializableExtra("postKey");
+
+        Toast.makeText(this, "Key = " + postKey, Toast.LENGTH_SHORT).show();
         if(post!=null){
 //            Toast.makeText(this, "Pohchi gaya", Toast.LENGTH_SHORT).show();
 
