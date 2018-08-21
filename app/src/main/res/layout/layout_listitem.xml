@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="8dp">
 
 
     <ScrollView
@@ -26,8 +26,8 @@
                     android:id="@+id/tv_company_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -37,8 +37,8 @@
                     android:id="@+id/tv_position_listitem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_company_listitem"
@@ -63,9 +63,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@android:color/transparent"
+                    android:ellipsize="end"
                     android:ems="10"
                     android:inputType="textMultiLine|textNoSuggestions"
-                    android:ellipsize="end"
                     android:lines="4"
                     android:maxLines="4"
                     android:singleLine="false"
@@ -77,45 +77,46 @@
                     android:id="@+id/tv_views"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_description_listitem"
                     tools:text="0 views" />
 
-                <TextView
-                    android:id="@+id/tv_total_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/tv_views"
-                    app:layout_constraintTop_toTopOf="@+id/tv_views"
-                    tools:text="3 comments" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_total_comment"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="8dp"-->
+                    <!--android:layout_marginStart="8dp"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/tv_views"-->
+                    <!--app:layout_constraintTop_toTopOf="@+id/tv_views"-->
+                    <!--tools:text="3 comments" />-->
 
-                <ImageButton
-                    android:id="@+id/btn_comment_listitem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@null"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
-                    app:srcCompat="@mipmap/baseline_comment_black_24" />
+                <!--<ImageButton-->
+                <!--android:id="@+id/btn_comment_listitem"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:layout_marginLeft="8dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@null"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"-->
+                <!--app:srcCompat="@mipmap/baseline_comment_black_24" />-->
 
-                <TextView
-                    android:id="@+id/tv_comment_listitem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toEndOf="@+id/btn_comment_listitem"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"
-                    tools:text="comment" />
+                <!--<TextView-->
+                <!--android:id="@+id/tv_comment_listitem"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:layout_marginLeft="8dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--app:layout_constraintStart_toEndOf="@+id/btn_comment_listitem"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/tv_total_comment"-->
+                <!--tools:text="comment" />-->
 
                 <TextView
                     android:id="@+id/tv_date_listitem"

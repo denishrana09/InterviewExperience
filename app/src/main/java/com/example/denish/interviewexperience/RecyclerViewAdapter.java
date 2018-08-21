@@ -40,21 +40,21 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     static class ViewHolder extends RecyclerView.ViewHolder{
         private static final String TAG = "ViewHolder";
         TextView company=null,position=null,username=null,postdate=null
-                ,totalcomments=null,views=null,comment=null,description=null;
-        ImageButton btn_comment=null;
+                ,views=null,comment=null,description=null;
+//        ImageButton btn_comment=null;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.company = itemView.findViewById(R.id.tv_company_listitem);
             this.position = itemView.findViewById(R.id.tv_position_listitem);
             this.username = itemView.findViewById(R.id.tv_username_listitem);
-            this.totalcomments = itemView.findViewById(R.id.tv_total_comment);
+//            this.totalcomments = itemView.findViewById(R.id.tv_total_comment);
             this.views = itemView.findViewById(R.id.tv_views);
-            this.comment = itemView.findViewById(R.id.tv_comment_listitem);
+//            this.comment = itemView.findViewById(R.id.tv_comment_listitem);
             this.postdate = itemView.findViewById(R.id.tv_date_listitem);
             this.description = itemView.findViewById(R.id.tv_description_listitem);
 
-            this.btn_comment = itemView.findViewById(R.id.btn_comment_listitem);
+//            this.btn_comment = itemView.findViewById(R.id.btn_comment_listitem);
 
         }
     }
@@ -76,8 +76,8 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         holder.position.setText(postItem.getPosition());
         holder.username.setText(theusername);
         holder.views.setText(postItem.getViews()+ " views");
-        holder.totalcomments.setText(postItem.getComments() + " comments");
-        holder.comment.setText(" comment");
+//        holder.totalcomments.setText(postItem.getComments() + " comments");
+//        holder.comment.setText(" comment");
         holder.postdate.setText(postItem.getDate());
 
         String str = postItem.getDescription();

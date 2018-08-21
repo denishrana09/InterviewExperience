@@ -13,19 +13,17 @@ public class Post implements Serializable{
     String userid;
     String date;
     int views;
-    int comments;
 
     public Post() {
     }
 
-    public Post(String company, String position, String description, String userid, String date, int views, int comments) {
+    public Post(String company, String position, String description, String userid, String date, int views) {
         this.company = company;
         this.position = position;
         this.description = description;
         this.userid = userid;
         this.date = date;
         this.views = views;
-        this.comments = comments;
     }
 
     public String getUserid() {
@@ -76,14 +74,6 @@ public class Post implements Serializable{
         this.description = description;
     }
 
-    public int getComments() {
-        return comments;
-    }
-
-    public void setComments(int comments) {
-        this.comments = comments;
-    }
-
     @Override
     public String toString() {
         return "Post{" +
@@ -93,7 +83,6 @@ public class Post implements Serializable{
                 ", userid='" + userid + '\'' +
                 ", date='" + date + '\'' +
                 ", views=" + views +
-                ", comments=" + comments +
                 '}';
     }
 

@@ -26,14 +26,6 @@ public class PostDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
@@ -42,19 +34,25 @@ public class PostDetailActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Key = " + postKey, Toast.LENGTH_SHORT).show();
         if(post!=null){
-//            Toast.makeText(this, "Pohchi gaya", Toast.LENGTH_SHORT).show();
+            TextView company = findViewById(R.id.tv_detail_company);
+            company.setText(post.getCompany());
+            company.setLongClickable(false);
 
-//            TextView photoTitle = findViewById(R.id.photo_title);
-////            photoTitle.setText("Title: "+ photo.getTitle());
-//            Resources resources = getResources();
-//            String text = resources.getString(R.string.photo_title_text,photo.getTitle());
-//            photoTitle.setText(text);
-//
-//            TextView photoTags = findViewById(R.id.photo_tags);
-//            photoTags.setText(resources.getString(R.string.photo_tags_text,photo.getTags()));
-//
-//            TextView photoAuthor = findViewById(R.id.photo_author);
-//            photoAuthor.setText(photo.getAuthor());
+            TextView position = findViewById(R.id.tv_detail_position);
+            position.setText(post.getPosition());
+            position.setLongClickable(false);
+
+            TextView date = findViewById(R.id.tv_detail_date);
+            date.setText(post.getDate());
+            date.setLongClickable(false);
+
+            TextView description = findViewById(R.id.tv_detail_description);
+            description.setText(post.getDescription());
+            description.setLongClickable(false);
+
+            TextView username = findViewById(R.id.tv_detail_username);
+            username.setText(post.getUserid());
+            username.setLongClickable(false);
 
         }
     }

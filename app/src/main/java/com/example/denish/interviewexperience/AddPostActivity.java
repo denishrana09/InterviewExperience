@@ -97,7 +97,7 @@ public class AddPostActivity extends AppCompatActivity {
                     todaysDate = new Date();
                     Post model = new Post(company.getText().toString(),
                             position.getText().toString(),
-                            description.getText().toString(), userid, dateFormat.format(todaysDate), 0, 0);
+                            description.getText().toString(), userid, dateFormat.format(todaysDate), 0);
                     mPostsDBRef.push().setValue(model);
 
                     String newCompany = company.getText().toString();
