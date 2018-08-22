@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements
     private ChildEventListener mUserCEListener;
     private ChildEventListener mPostCEListener;
     ArrayList<String> emailList,userIdList;
+    ArrayList<User> usersList;
 
     List<Post> mPostsDataItems;
     ArrayList<String> mKeys;
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements
 
         emailList = new ArrayList<>();
         userIdList = new ArrayList<>();
+        usersList = new ArrayList<>();
 
         mKeys = new ArrayList<String>();
         mPostsDataItems = new ArrayList<>();
@@ -167,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     User user = dataSnapshot.getValue(User.class);
                     userIdList.add(dataSnapshot.getKey());
+                    usersList.add(user);
                     emailList.add(user.getEmail());
                 }
 
@@ -330,9 +333,14 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(TAG, "OnItemClick: starts");
         Toast.makeText(MainActivity.this, "Normal tap at position "+ position, Toast.LENGTH_SHORT).show();
 
+        String userId = mRecyclerViewAdapter.getPost(position).getUserid();
+        int i = userIdList.indexOf(userId);
+        String theName = usersList.get(i).getUsername();
+
         Intent intent = new Intent(this,PostDetailActivity.class);
         intent.putExtra(POST_TRANSFER,mRecyclerViewAdapter.getPost(position));
         intent.putExtra("postKey",mKeys.get(position));
+        intent.putExtra("userName",theName);
         startActivity(intent);
     }
 
