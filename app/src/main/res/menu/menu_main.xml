@@ -8,6 +8,12 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
+        android:id="@+id/icon_user_profile"
+        android:icon="@mipmap/baseline_account_circle_black_24"
+        android:orderInCategory="101"
+        android:title="Profile"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/sign_out_menu"
         android:title="@string/sign_out"
         app:showAsAction="never"/>

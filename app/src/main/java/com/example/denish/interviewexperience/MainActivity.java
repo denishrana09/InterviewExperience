@@ -331,8 +331,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void OnItemClick(View view, int position) {
         Log.d(TAG, "OnItemClick: starts");
-        Toast.makeText(MainActivity.this, "Normal tap at position "+ position, Toast.LENGTH_SHORT).show();
-
         String userId = mRecyclerViewAdapter.getPost(position).getUserid();
         int i = userIdList.indexOf(userId);
         String theName = usersList.get(i).getUsername();
